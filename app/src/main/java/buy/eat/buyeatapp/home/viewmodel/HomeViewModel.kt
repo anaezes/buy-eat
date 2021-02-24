@@ -6,30 +6,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 import buy.eat.buyeatapp.home.data.HomeRepository
-import buy.eat.buyeatapp.home.data.PostModel
+import buy.eat.buyeatapp.home.data.RecipeModel
+import buy.eat.buyeatapp.home.data.Recipes
 
 class HomeViewModel(application: Application): AndroidViewModel(application) {
     private var homeRepository:HomeRepository?=null
-    var postModelListLiveData : LiveData<List<PostModel>>?=null
-    var createPostLiveData:LiveData<PostModel>?=null
-    var deletePostLiveData:LiveData<Boolean>?=null
+    var recipeModelListLiveData : List<RecipeModel>?=null
+    var createRecipeLiveData:LiveData<RecipeModel>?=null
+    var deleteRecipeLiveData:LiveData<Boolean>?=null
 
     init {
         homeRepository = HomeRepository()
-        postModelListLiveData = MutableLiveData()
-        createPostLiveData = MutableLiveData()
-        deletePostLiveData = MutableLiveData()
+        //recipeModelListLiveData = MutableLiveData()
+        createRecipeLiveData = MutableLiveData()
+        deleteRecipeLiveData = MutableLiveData()
     }
 
-    fun fetchAllPosts(){
-        postModelListLiveData = homeRepository?.fetchAllPosts()
+    fun fetchRandomRecipes(){
+        //recipeModelListLiveData = homeRepository?.fetchRandomRecipes()
     }
 
-    fun createPost(postModel: PostModel){
-        createPostLiveData = homeRepository?.createPost(postModel)
+    fun createRecipe(RecipeModel: RecipeModel){
+        createRecipeLiveData = homeRepository?.createRecipe(RecipeModel)
     }
 
-    fun deletePost(id:Int){
-        deletePostLiveData = homeRepository?.deletePost(id)
+    fun deleteRecipe(id:Int){
+        deleteRecipeLiveData = homeRepository?.deleteRecipe(id)
     }
 }

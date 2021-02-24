@@ -5,18 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import buy.eat.buyeatapp.R
-import buy.eat.buyeatapp.home.data.PostModel
+import buy.eat.buyeatapp.home.data.RecipeModel
 import kotlinx.android.synthetic.main.home_rv_item_view.view.*
 
 class HomeAdapter(var listener: HomeListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>(){
 
-    private var data : ArrayList<PostModel>?=null
+    private var data : ArrayList<RecipeModel>?=null
 
     interface HomeListener{
-        fun onItemDeleted(postModel: PostModel, position: Int)
+        fun onItemDeleted(recipeModel: RecipeModel, position: Int)
     }
 
-    fun setData(list: ArrayList<PostModel>){
+    fun setData(list: ArrayList<RecipeModel>){
         data = list
         notifyDataSetChanged()
     }
@@ -34,13 +34,13 @@ class HomeAdapter(var listener: HomeListener) : RecyclerView.Adapter<HomeAdapter
         holder.bindView(item)
         holder.itemView.img_delete.setOnClickListener {
             item?.let { it1 ->
-                listener.onItemDeleted(it1, position)
+                //listener.onItemDeleted(it1, position)
             }
         }
     }
 
-    fun addData(postModel: PostModel) {
-        data?.add(0,postModel)
+    fun addData(recipeModel: RecipeModel) {
+        data?.add(0,recipeModel)
         notifyItemInserted(0)
     }
 
@@ -50,9 +50,10 @@ class HomeAdapter(var listener: HomeListener) : RecyclerView.Adapter<HomeAdapter
     }
 
     class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun bindView(item: PostModel?) {
+        fun bindView(item: RecipeModel?) {
+
             itemView.tv_home_item_title.text = item?.title
-            itemView.tv_home_item_body.text = item?.body
+            itemView.tv_home_item_body.text = item?.summary
         }
 
     }

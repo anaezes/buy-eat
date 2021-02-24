@@ -1,12 +1,18 @@
 package buy.eat.buyeatapp.home.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import buy.eat.buyeatapp.network.ApiClient
 import buy.eat.buyeatapp.network.ApiInterface
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.*
+import ru.gildor.coroutines.retrofit.awaitResponse
+import ru.gildor.coroutines.retrofit.awaitResult
+import ru.gildor.coroutines.retrofit.getOrNull
 
 class HomeRepository {
     private var apiInterface:ApiInterface?=null
@@ -15,68 +21,91 @@ class HomeRepository {
         apiInterface = ApiClient.getApiClient().create(ApiInterface::class.java)
     }
 
-    fun fetchAllPosts():LiveData<List<PostModel>>{
-        val data = MutableLiveData<List<PostModel>>()
+    suspend fun fetchRandomRecipes(): List<RecipeModel>? {
+        val data = MutableLiveData<List<RecipeModel>>()
 
-        apiInterface?.fetchAllPosts()?.enqueue(object : Callback<List<PostModel>>{
+        println("pim");
 
-            override fun onFailure(call: Call<List<PostModel>>, t: Throwable) {
+        val recipes: Recipes? = apiInterface?.fetchRandomRecipes()?.awaitResult()?.getOrNull()
+
+
+
+        /*// Works for non-nullable type
+        val nullableResult = api.getUser("username").awaitResult().getOrNull()
+
+        try {
+            // Wait (suspend) for response
+            val response: Response<Recipes> = apiInterface?.fetchRandomRecipes()!!.awaitResponse()
+            if (response.isSuccessful()) {
+                // Now we can work with response object
+                //println("User ${response.body().name} loaded")
+            }
+        } catch (e: Throwable) {
+            // All other exceptions (non-http)
+            log("Something broken", e)
+        }*/
+
+            /*   apiInterface?.fetchRandomRecipes()?.enqueue(object : Callback<Recipes>{
+
+            override fun onFailure(call: Call<Recipes>, t: Throwable) {
+                println("pam: $data");
                 data.value = null
             }
 
             override fun onResponse(
-                call: Call<List<PostModel>>,
-                response: Response<List<PostModel>>
+                call: Call<Recipes>,
+                response: Response<Recipes>
             ) {
-
                 val res = response.body()
                 if (response.code() == 200 &&  res!=null){
-                    data.value = res
-                }else{
-                    data.value = null
-                }
-
-            }
-        })
-
-        return data
-    }
-
-    fun createPost(postModel: PostModel):LiveData<PostModel>{
-        val data = MutableLiveData<PostModel>()
-
-        apiInterface?.createPost(postModel)?.enqueue(object : Callback<PostModel>{
-            override fun onFailure(call: Call<PostModel>, t: Throwable) {
-                data.value = null
-            }
-
-            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-                val res = response.body()
-                if (response.code() == 201 && res!=null){
-                    data.value = res
+                    data.value = res.recipes
+                    println("data: " + data.value);
                 }else{
                     data.value = null
                 }
             }
-        })
+        })*/
 
-        return data
+            println(recipes);
+            return recipes?.Recipes
+        }
 
+        fun createRecipe(recipeModel: RecipeModel): LiveData<RecipeModel> {
+            val data = MutableLiveData<RecipeModel>()
+
+            apiInterface?.createRecipe(recipeModel)?.enqueue(object : Callback<RecipeModel> {
+                override fun onFailure(call: Call<RecipeModel>, t: Throwable) {
+                    data.value = null
+                }
+
+                override fun onResponse(call: Call<RecipeModel>, response: Response<RecipeModel>) {
+                    val res = response.body()
+                    if (response.code() == 201 && res != null) {
+                        data.value = res
+                    } else {
+                        data.value = null
+                    }
+                }
+            })
+
+            return data
+
+        }
+
+        fun deleteRecipe(id: Int): LiveData<Boolean> {
+            val data = MutableLiveData<Boolean>()
+
+            apiInterface?.deleteRecipe(id)?.enqueue(object : Callback<String> {
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    data.value = false
+                }
+
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    data.value = response.code() == 200
+                }
+            })
+
+            return data
+
+        }
     }
-
-    fun deletePost(id:Int):LiveData<Boolean>{
-        val data = MutableLiveData<Boolean>()
-
-        apiInterface?.deletePost(id)?.enqueue(object : Callback<String>{
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                data.value = false
-            }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                data.value = response.code() == 200
-            }
-        })
-
-        return data
-
-    }}

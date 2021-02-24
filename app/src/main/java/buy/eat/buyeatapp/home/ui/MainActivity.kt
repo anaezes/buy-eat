@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import buy.eat.buyeatapp.R
-import buy.eat.buyeatapp.home.data.PostModel
+import buy.eat.buyeatapp.home.data.RecipeModel
 import buy.eat.buyeatapp.home.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.create_post_dialog.view.*
+import kotlinx.android.synthetic.main.create_recipe_dialog.view.*
 
 class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
 
@@ -27,17 +27,27 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
 
         initAdapter()
 
-        vm.fetchAllPosts()
+        vm.fetchRandomRecipes()
 
-        vm.postModelListLiveData?.observe(this, Observer {
+        println("-----------------> pimmmmmmmm");
+
+        //println(vm.recipeModelListLiveData?.value);
+
+        vm.createRecipeLiveData?.observe(this, Observer {
             if (it!=null){
+
+                println("-----------------> pammmmmmmm");
+                println(it);
+
                 rv_home.visibility = View.VISIBLE
-                adapter.setData(it as ArrayList<PostModel>)
+                adapter.setData(it as ArrayList<RecipeModel>)
             }else{
                 showToast("Something went wrong")
             }
             progress_home.visibility = View.GONE
         })
+
+      println("-----------------> pummmmmmmm");
 
     }
 
@@ -48,14 +58,14 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.menu_create_post -> showCreatePOstDialog()
+            R.id.menu_create_recipe -> showCreatePOstDialog()
         }
         return true
     }
 
     private fun showCreatePOstDialog() {
         val dialog = Dialog(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.create_post_dialog, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.create_recipe_dialog, null)
         dialog.setContentView(view)
 
         var title = ""
@@ -66,19 +76,19 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
             body = view.et_body.text.toString().trim()
 
             if (title.isNotEmpty() && body.isNotEmpty()){
-                val postModel = PostModel()
-                postModel.userId = 1
-                postModel.title = title
-                postModel.body = body
+                val recipeModel = RecipeModel()
+                recipeModel.id = 1
+                recipeModel.title = title
+                recipeModel.summary = body
 
-                vm.createPost(postModel)
+                vm.createRecipe(recipeModel)
 
-                vm.createPostLiveData?.observe(this, Observer {
+                vm.createRecipeLiveData?.observe(this, Observer {
                     if (it!=null){
-                        adapter.addData(postModel)
+                        adapter.addData(recipeModel)
                         rv_home.smoothScrollToPosition(0)
                     }else{
-                        showToast("Cannot create post at the moment")
+                        showToast("Cannot create recipe at the moment")
                     }
                     dialog.cancel()
                 })
@@ -102,13 +112,13 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
         rv_home.adapter = adapter
     }
 
-    override fun onItemDeleted(postModel: PostModel, position: Int) {
-        postModel.id?.let { vm.deletePost(it) }
-        vm.deletePostLiveData?.observe(this, Observer {
+    override fun onItemDeleted(recipeModel: RecipeModel, position: Int) {
+        recipeModel.id?.let { vm.deleteRecipe(it) }
+        vm.deleteRecipeLiveData?.observe(this, Observer {
             if (it!=null){
                 adapter.removeData(position)
             }else{
-                showToast("Cannot delete post at the moment!")
+                showToast("Cannot delete recipe at the moment!")
             }
         })
 
