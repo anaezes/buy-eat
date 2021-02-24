@@ -29,16 +29,9 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
 
         vm.fetchRandomRecipes()
 
-        println("-----------------> pimmmmmmmm");
-
-        //println(vm.recipeModelListLiveData?.value);
-
-        vm.createRecipeLiveData?.observe(this, Observer {
+        vm.recipeModelListLiveData?.observe(this, Observer {
             if (it!=null){
-
-                println("-----------------> pammmmmmmm");
                 println(it);
-
                 rv_home.visibility = View.VISIBLE
                 adapter.setData(it as ArrayList<RecipeModel>)
             }else{
@@ -46,9 +39,6 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
             }
             progress_home.visibility = View.GONE
         })
-
-      println("-----------------> pummmmmmmm");
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -96,7 +86,6 @@ class MainActivity : AppCompatActivity(), HomeAdapter.HomeListener {
             }else{
                 showToast("Please fill data carefully!")
             }
-
         }
 
         dialog.show()

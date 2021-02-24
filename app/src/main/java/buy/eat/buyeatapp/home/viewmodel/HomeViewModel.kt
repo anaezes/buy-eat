@@ -11,19 +11,19 @@ import buy.eat.buyeatapp.home.data.Recipes
 
 class HomeViewModel(application: Application): AndroidViewModel(application) {
     private var homeRepository:HomeRepository?=null
-    var recipeModelListLiveData : List<RecipeModel>?=null
+    var recipeModelListLiveData : LiveData<List<RecipeModel>>?=null
     var createRecipeLiveData:LiveData<RecipeModel>?=null
     var deleteRecipeLiveData:LiveData<Boolean>?=null
 
     init {
         homeRepository = HomeRepository()
-        //recipeModelListLiveData = MutableLiveData()
+        recipeModelListLiveData = MutableLiveData()
         createRecipeLiveData = MutableLiveData()
         deleteRecipeLiveData = MutableLiveData()
     }
 
     fun fetchRandomRecipes(){
-        //recipeModelListLiveData = homeRepository?.fetchRandomRecipes()
+        recipeModelListLiveData = homeRepository?.fetchRandomRecipes()
     }
 
     fun createRecipe(RecipeModel: RecipeModel){
