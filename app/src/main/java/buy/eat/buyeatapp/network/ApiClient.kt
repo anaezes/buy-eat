@@ -1,12 +1,12 @@
 package buy.eat.buyeatapp.network
 
+import buy.eat.buyeatapp.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASEURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
 class ApiClient {
     companion object{
         private var retrofit:Retrofit?=null
@@ -20,7 +20,7 @@ class ApiClient {
                     .build()
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                        .baseUrl(BASEURL)
+                        .baseUrl(BuildConfig.API_URL)
                         .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build()

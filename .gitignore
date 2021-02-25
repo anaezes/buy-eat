@@ -17,6 +17,9 @@ bin/
 gen/
 out/
 
+# Graddle Properties
+gradle.properties
+
 # Gradle files
 .gradle
 .gradle/
