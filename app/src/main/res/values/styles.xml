@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DarkThemeApp" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
+    </style>
+
+    <style name="MyActionBarStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:titleTextStyle">@style/MyActionBarTitleTextStyle</item>
+    </style>
+
+    <style name="MyActionBarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#ff0000</item>
+    </style>
+
+
+    <style name="Theme.BuyEatApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>-->
+
+    <style name="Theme.BuyEatApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.BuyEatApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

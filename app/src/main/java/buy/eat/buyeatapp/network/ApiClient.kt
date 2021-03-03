@@ -18,6 +18,7 @@ class ApiClient {
                     .readTimeout(100, TimeUnit.SECONDS)
                     .connectTimeout(100, TimeUnit.SECONDS)
                     .build()
+
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
                         .baseUrl(BuildConfig.API_URL)

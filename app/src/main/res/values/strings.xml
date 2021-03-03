@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">BuyEatApp</string>
+    <string name="app_name">Buy Eat</string>
     <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -9,4 +10,13 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="button1">Button</string>
+    <string name="button2">Button</string>
+    <string name="button3">Button</string>
+    <string name="button4">Button</string>
+    <string name="logo">logo</string>
+    <string name="list">LIST</string>
+    <string name="button5">Button</string>
+    <string name="recipes">RECIPES</string>
+    <string name="config">config</string>
 </resources>

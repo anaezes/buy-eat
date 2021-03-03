@@ -3,12 +3,13 @@ package buy.eat.buyeatapp.home.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import buy.eat.buyeatapp.R
 import buy.eat.buyeatapp.home.data.RecipeModel
 import kotlinx.android.synthetic.main.home_rv_item_view.view.*
 
-class HomeAdapter(var listener: HomeListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>(){
+class HomeFragment(var listener: FragmentActivity) : RecyclerView.Adapter<HomeFragment.HomeViewHolder>(){
 
     private var data : ArrayList<RecipeModel>?=null
 
