@@ -69,7 +69,9 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation('com.squareup.retrofit2:retrofit:2.7.2')
+    implementation 'com.squareup.okhttp3:okhttp:3.14.7'
+
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.google.code.gson:gson:2.8.5'
 
@@ -78,6 +80,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0-beta01'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    //images
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //tests
     testImplementation 'junit:junit:4.13.2'

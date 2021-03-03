@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface ApiInterface {
     @Headers(BuildConfig.API_KEY, BuildConfig.API_HOST)
-    @GET("recipes/random?number=2")
+    @GET("recipes/random?number=4")
     fun fetchRandomRecipes(): Call<Recipes>
 
     @POST("posts")
