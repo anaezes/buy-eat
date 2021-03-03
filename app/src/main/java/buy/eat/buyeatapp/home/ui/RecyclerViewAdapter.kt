@@ -38,8 +38,8 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
         Picasso.get().load(recyclerData.image)
             .error(R.drawable.ic_action_delete)
             .placeholder(R.drawable.ic_action_delete)
-            //.fit()
-            .resize(holder.image.layoutParams.height, holder.image.layoutParams.height)
+            .fit()
+            //.resize(holder.image.layoutParams.height, holder.image.layoutParams.height)
             .centerCrop(Gravity.CENTER)
             .into(holder.image)
 
