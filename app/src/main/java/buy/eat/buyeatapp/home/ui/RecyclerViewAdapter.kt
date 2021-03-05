@@ -1,6 +1,7 @@
 
 package buy.eat.buyeatapp.home.ui
 
+import android.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -16,32 +17,32 @@ import java.util.*
 
 class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>(){
 
+    private lateinit var viewFragment: View
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :  RecyclerViewHolder {
-        var view = LayoutInflater.from(parent.getContext()).inflate(
+        viewFragment = LayoutInflater.from(parent.getContext()).inflate(
             R.layout.home_rv_item_view,
             parent,
             false
         );
-        return RecyclerViewHolder(view);
+        return RecyclerViewHolder(viewFragment);
     }
 
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        // Set the data to textview and imageview.
         var recyclerData = courseDataArrayList.get(position);
         holder.title.setText(recyclerData.title);
-        //holder.summary.setText(recyclerData.summary);
-        //holder.image.setImageResource(recyclerData);
-
-        recyclerData.image
 
         Picasso.get().load(recyclerData.image)
             .error(R.drawable.ic_action_delete)
             .placeholder(R.drawable.ic_action_delete)
             .fit()
-            //.resize(holder.image.layoutParams.height, holder.image.layoutParams.height)
             .centerCrop(Gravity.CENTER)
             .into(holder.image)
+
+        holder.view.setOnClickListener {
+            onAlertDialog(viewFragment, recyclerData)
+        }
 
     }
 
@@ -54,6 +55,33 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
         var title: TextView = itemView.findViewById(R.id.tv_home_item_title)
         var image: ImageView = itemView.findViewById(R.id.tv_home_item_img);
     }
+
+    fun onAlertDialog(view: View, recyclerData:RecipeModel) {
+
+        val dialogBuilder = AlertDialog.Builder(view.context)
+        val dialogView: View = LayoutInflater.from(view.context).inflate(R.layout.view_recipe, null)
+        dialogBuilder.setView(dialogView)
+
+        val imageview = dialogView.findViewById<View>(R.id.recipe_image) as ImageView
+
+        Picasso.get().load(recyclerData.image)
+            .error(R.drawable.ic_action_delete)
+            .placeholder(R.drawable.ic_action_delete)
+            .fit()
+            .centerCrop(Gravity.CENTER)
+            .into(imageview)
+
+        val title = dialogView.findViewById<View>(R.id.recipe_title) as TextView
+        title.setText(recyclerData.title)
+
+        val description = dialogView.findViewById<View>(R.id.recipe_description) as TextView
+        description.setText(recyclerData.instructions)
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.round_corner);
+        alertDialog.show()
+    }
+
 
 
 /*    class CropSquareTransformation : Transformation
