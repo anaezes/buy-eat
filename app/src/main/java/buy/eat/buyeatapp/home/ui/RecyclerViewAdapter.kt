@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +57,7 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
         var image: ImageView = itemView.findViewById(R.id.tv_home_item_img);
     }
 
-    fun onAlertDialog(view: View, recyclerData:RecipeModel) {
+    fun onAlertDialog(view: View, recyclerData: RecipeModel) {
 
         val dialogBuilder = AlertDialog.Builder(view.context)
         val dialogView: View = LayoutInflater.from(view.context).inflate(R.layout.view_recipe, null)
@@ -75,33 +76,19 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
         title.setText(recyclerData.title)
 
         val description = dialogView.findViewById<View>(R.id.recipe_description) as TextView
-        description.setText(recyclerData.instructions)
+        description.setText(removeHTMLTags(recyclerData.instructions))
 
         val alertDialog = dialogBuilder.create()
         alertDialog.window?.setBackgroundDrawableResource(R.drawable.round_corner);
         alertDialog.show()
+
+        val btn_back = dialogView.findViewById(R.id.back_button) as Button
+        btn_back.setOnClickListener {
+            alertDialog.hide();
+        }
     }
 
-
-
-/*    class CropSquareTransformation : Transformation
-    {
-
-        override fun transform(source: Bitmap): Bitmap {
-
-            val size: Int = Math.min(source.getWidth(), source.getHeight())
-            val x: Int = (source.getWidth() - size) / 2
-            val y: Int = (source.getHeight() - size) / 2
-            val result = Bitmap.createBitmap(source, x, y, size, size)
-            if (result != source) {
-                source.recycle()
-            }
-            return result
-        }
-
-        override fun key(): String {
-            return "square()";
-        }
-    }*/
-
+    fun removeHTMLTags(str: String?): String =
+        if (str.isNullOrEmpty()) "ups ... we are cooking this recipe for you."
+        else str.replace("\\<.*?\\>".toRegex(), "")
 }

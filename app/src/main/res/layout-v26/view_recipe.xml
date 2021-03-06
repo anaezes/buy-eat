@@ -19,17 +19,16 @@
         android:minWidth="500dp"
         android:minHeight="500dp"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical">
 
         <LinearLayout
-            android:id="@+id/title_header"
+            android:id="@+id/llsubhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/green"
             android:maxHeight="98dp"
             android:minHeight="5dp"
-            android:background="@color/green"
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -62,7 +61,6 @@
 
         <TextView
             android:id="@+id/recipe_description"
-            android:justificationMode="inter_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,10 +72,24 @@
             android:autoSizeMinTextSize="15sp"
             android:autoSizeStepGranularity="2sp"
             android:autoSizeTextType="uniform"
+            android:justificationMode="inter_word"
             android:paddingStart="20dp"
             android:text="Description"
             android:textColor="@color/black"
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@color/green"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp"
+            android:text="Back"
+            android:textColor="@color/white"
+            app:cornerRadius="15dp" />
 
     </LinearLayout>
 </ScrollView>
