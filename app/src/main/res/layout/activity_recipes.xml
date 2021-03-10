@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="5dp">
 
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +18,7 @@
             android:layout_height="60dp">
 
             <Button
+                android:id="@+id/btn_all"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
@@ -27,104 +29,107 @@
                 android:textSize="12sp" />
 
             <ImageButton
+                android:id="@+id/btn_vegetarian"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="7dp"
                 android:paddingLeft="1dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/vegetarian"
-                android:text="vegetarian"
                 android:textColor="@color/white"
                 android:textSize="6sp"
-                android:tint="@color/white" />
+                android:tint="@drawable/button_selected_image" />
 
             <ImageButton
+                android:id="@+id/btn_dairyFree"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/dairyfree"
-                android:text="DairyFree"
                 android:textColor="@color/white"
                 android:textSize="7sp"
-                android:tint="@color/white" />
+                android:tint="@drawable/button_selected_image"/>
 
             <ImageButton
+                android:id="@+id/btn_glutenFree"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/glutenfree"
-                android:text="glutenFree"
                 android:textColor="@color/white"
                 android:textSize="6sp"
-                android:tint="@color/white" />
+                android:tint="@drawable/button_selected_image" />
 
             <ImageButton
+                android:id="@+id/btn_lowFodmap"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/lowfodmap"
-                android:text="lowFodmap"
                 android:textColor="@color/white"
-                android:tint="@color/white"/>
+                android:tint="@drawable/button_selected_image"/>
 
             <ImageButton
+                android:id="@+id/btn_veryHealthy"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="9dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/health"
                 android:textColor="@color/white"
-                android:tint="@color/white"/>
+                android:tint="@drawable/button_selected_image" />
 
             <ImageButton
+                android:id="@+id/btn_sustainable"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/sustainable"
                 android:textColor="@color/white"
-                android:tint="@color/white"/>
+                android:tint="@color/white" />
 
             <ImageButton
+                android:id="@+id/btn_cheap"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@drawable/button_selected"
                 android:padding="9dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/cheap"
                 android:textColor="@color/white"
                 android:textSize="8sp"
-                android:tint="@color/white"/>
+                android:tint="@drawable/button_selected_image" />
 
         </LinearLayout>
 

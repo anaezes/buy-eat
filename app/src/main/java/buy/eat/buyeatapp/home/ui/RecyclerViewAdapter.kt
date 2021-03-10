@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import buy.eat.buyeatapp.R
 import buy.eat.buyeatapp.home.data.RecipeModel
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_recipes.*
 import java.util.*
 
 
 class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>(){
+
 
     private lateinit var viewFragment: View
 
@@ -47,10 +49,90 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
 
     }
 
-    override fun getItemCount(): Int {
+    public override fun getItemCount(): Int {
         return courseDataArrayList.size;
     }
 
+    public fun getData(): ArrayList<RecipeModel> {
+        return courseDataArrayList
+    }
+
+    public fun filterVegetarianRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].vegetarian) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterDairyFreeRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].dairyFree) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterGlutenFreeRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].glutenFree) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterLowFodmapRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].lowFodmap) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterVeryHealthRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].veryHealthy) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterSustainableRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].sustainable) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
+
+    public fun filterCheapRecipes(show: Boolean, view: View, pos: Int) {
+        if(show) {
+            if (courseDataArrayList[pos].cheap) {
+                view.visibility = View.VISIBLE
+            }
+        }
+        else {
+            view.visibility = View.GONE
+        }
+    }
 
     class RecyclerViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = itemView.findViewById(R.id.tv_home_item_title)
