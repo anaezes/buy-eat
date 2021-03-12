@@ -27,7 +27,7 @@ data class RecipeModel(
          var sourceName:String?="",
          var pricePerServing:Double?=0.0,
          //List<ExtendedIngredient> extendedIngredients:List<AnalyzedInstruction>,
-         var id:Int?=0,
+         var id:Int,
          var title:String?="",
          var readyInMinutes:Int?=0,
          var servings:Int?=0,

@@ -13,14 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import buy.eat.buyeatapp.R
 import buy.eat.buyeatapp.home.data.RecipeModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_recipes.*
 import java.util.*
+import kotlin.collections.HashSet
 
 
-class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>(){
-
+class RecyclerViewAdapter(var displayRecipes: HashSet<RecipeModel>) : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>(){
 
     private lateinit var viewFragment: View
+    private var hiddenRecipes: HashSet<RecipeModel> = HashSet<RecipeModel>()
+    private var hiddenRecipesLabel: ArrayList<String> = ArrayList<String>()
+
+    class RecyclerViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+        var id: Int = 0
+        var title: TextView = itemView.findViewById(R.id.tv_home_item_title)
+        var image: ImageView = itemView.findViewById(R.id.tv_home_item_img)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :  RecyclerViewHolder {
         viewFragment = LayoutInflater.from(parent.getContext()).inflate(
@@ -31,146 +38,102 @@ class RecyclerViewAdapter(var courseDataArrayList: ArrayList<RecipeModel>) : Rec
         return RecyclerViewHolder(viewFragment);
     }
 
-
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        var recyclerData = courseDataArrayList.get(position);
+        var recyclerData = displayRecipes.elementAt(position);
         holder.title.setText(recyclerData.title);
+        holder.id = recyclerData.id;
 
         Picasso.get().load(recyclerData.image)
-            .error(R.drawable.ic_action_delete)
-            .placeholder(R.drawable.ic_action_delete)
+            .error(R.drawable.cooking)
+            .placeholder(R.drawable.cooking)
             .fit()
             .centerCrop(Gravity.CENTER)
             .into(holder.image)
 
         holder.view.setOnClickListener {
-            onAlertDialog(viewFragment, recyclerData)
+            Utils.onAlertDialog(viewFragment, recyclerData)
         }
 
     }
 
-    public override fun getItemCount(): Int {
-        return courseDataArrayList.size;
+    override fun getItemCount(): Int {
+        return displayRecipes.size;
     }
 
-    public fun getData(): ArrayList<RecipeModel> {
-        return courseDataArrayList
-    }
-
-    public fun filterVegetarianRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].vegetarian) {
-                view.visibility = View.VISIBLE
+    private fun applyFilter(filter: String) {
+        when (filter) {
+            "vegetarian" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).vegetarian) remove(it)
+                }
+            }
+            "dairyFree" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).dairyFree) remove(it)
+                }
+            }
+            "glutenFree" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).glutenFree) remove(it)
+                }
+            }
+            "lowFodmap" -> {
+                for (it in displayRecipes.indices) {
+                    if (displayRecipes.elementAt(it).lowFodmap) remove(it)
+                }
+            }
+            "veryHealthy" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).veryHealthy) remove(it)
+                }
+            }
+            "sustainable" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).sustainable) remove(it)
+                }
+            }
+            "cheap" -> {
+                for (it in displayRecipes.indices) {
+                    if (!displayRecipes.elementAt(it).cheap) remove(it)
+                }
             }
         }
-        else {
-            view.visibility = View.GONE
-        }
     }
 
-    public fun filterDairyFreeRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].dairyFree) {
-                view.visibility = View.VISIBLE
-            }
-        }
-        else {
-            view.visibility = View.GONE
-        }
+    private fun remove(position: Int) {
+        hiddenRecipes.add(displayRecipes.elementAt(position))
     }
 
-    public fun filterGlutenFreeRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].glutenFree) {
-                view.visibility = View.VISIBLE
-            }
-        }
-        else {
-            view.visibility = View.GONE
-        }
+    fun hideRecipes(filter: String) {
+
+        applyFilter(filter)
+
+        hiddenRecipesLabel.add(filter);
+        displayRecipes.removeAll(hiddenRecipes)
+
+        notifyDataSetChanged()
     }
 
-    public fun filterLowFodmapRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].lowFodmap) {
-                view.visibility = View.VISIBLE
-            }
+    fun showRecipes(filter: String) {
+        hiddenRecipesLabel.remove(filter);
+
+        displayRecipes.addAll(hiddenRecipes)
+        hiddenRecipes.clear();
+
+        for (it in hiddenRecipesLabel) {
+            applyFilter(it)
         }
-        else {
-            view.visibility = View.GONE
-        }
+
+        displayRecipes.removeAll(hiddenRecipes)
+        notifyDataSetChanged()
     }
 
-    public fun filterVeryHealthRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].veryHealthy) {
-                view.visibility = View.VISIBLE
-            }
-        }
-        else {
-            view.visibility = View.GONE
-        }
+    fun showAllRecipes() {
+        displayRecipes.addAll(hiddenRecipes)
+
+        hiddenRecipes.clear();
+        hiddenRecipesLabel = ArrayList<String>();
+
+        notifyDataSetChanged()
     }
-
-    public fun filterSustainableRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].sustainable) {
-                view.visibility = View.VISIBLE
-            }
-        }
-        else {
-            view.visibility = View.GONE
-        }
-    }
-
-    public fun filterCheapRecipes(show: Boolean, view: View, pos: Int) {
-        if(show) {
-            if (courseDataArrayList[pos].cheap) {
-                view.visibility = View.VISIBLE
-            }
-        }
-        else {
-            view.visibility = View.GONE
-        }
-    }
-
-    class RecyclerViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = itemView.findViewById(R.id.tv_home_item_title)
-        var image: ImageView = itemView.findViewById(R.id.tv_home_item_img);
-    }
-
-    fun onAlertDialog(view: View, recyclerData: RecipeModel) {
-
-        val dialogBuilder = AlertDialog.Builder(view.context)
-        val dialogView: View = LayoutInflater.from(view.context).inflate(R.layout.view_recipe, null)
-        dialogBuilder.setView(dialogView)
-
-        val imageview = dialogView.findViewById<View>(R.id.recipe_image) as ImageView
-
-        Picasso.get().load(recyclerData.image)
-            .error(R.drawable.ic_action_delete)
-            .placeholder(R.drawable.ic_action_delete)
-            .fit()
-            .centerCrop(Gravity.CENTER)
-            .into(imageview)
-
-        val title = dialogView.findViewById<View>(R.id.recipe_title) as TextView
-        title.setText(recyclerData.title)
-
-        val description = dialogView.findViewById<View>(R.id.recipe_description) as TextView
-        description.setText(removeHTMLTags(recyclerData.instructions))
-
-        val alertDialog = dialogBuilder.create()
-        alertDialog.window?.setBackgroundDrawableResource(R.drawable.round_corner);
-        alertDialog.show()
-
-        val btn_back = dialogView.findViewById(R.id.back_button) as Button
-        btn_back.setOnClickListener {
-            alertDialog.hide();
-        }
-    }
-
-    fun removeHTMLTags(str: String?): String =
-        if (str.isNullOrEmpty()) "ups ... we are cooking this recipe for you."
-        else str.replace("\\<.*?\\>".toRegex(), "")
 }

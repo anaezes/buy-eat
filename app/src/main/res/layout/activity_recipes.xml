@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,16 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_all"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/circle_button"
-                android:padding="5dp"
-                android:text="All"
+                android:backgroundTint="@drawable/button_selected"
+                android:padding="7dp"
+                android:paddingLeft="1dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/all"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="6sp"
+                android:tint="@drawable/button_selected_image" />
 
             <ImageButton
                 android:id="@+id/btn_vegetarian"
@@ -114,7 +118,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/sustainable"
                 android:textColor="@color/white"
-                android:tint="@color/white" />
+                android:tint="@drawable/button_selected_image" />
 
             <ImageButton
                 android:id="@+id/btn_cheap"
