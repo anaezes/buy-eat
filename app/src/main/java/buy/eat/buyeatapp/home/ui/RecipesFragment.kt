@@ -46,7 +46,7 @@ class RecipesFragment : Fragment() {
 
         vm.recipeModelListLiveData?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                println(it);
+
                 rv_recipes.visibility = View.VISIBLE
 
                 adapter = RecyclerViewAdapter(HashSet<RecipeModel>(it));
